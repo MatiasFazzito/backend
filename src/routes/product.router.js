@@ -1,17 +1,80 @@
-import { Router } from "express";
+import { Router } from "express"
+import { v4 as uuidv4 } from "uuid"
 
 const router = Router()
 
-const products =[]
+const products = []
 
-router.get("/", (req, res)=>{
+router.get("/", (req, res) => {
     res.json(products)
-} )
+})
 
-router.post("/", (req,res)=>{
-    const newProduct = req.body
+router.get("/:id", (req, res) => {
+    const id = req.params.id
+    const product = products.find(product => product.id === id)
+    if (!product) {
+        return res.status(404).json({ error: "Producto no encontrada" })
+    }
+    res.status(200).json(product)
+})
+
+router.post("/", (req, res) => {
+    const { title, description, code, price, status, stock, category } = req.body
+    if (!title || !description || !code || !price || !status || !stock || !category) {
+        return response.status(400).json({ error: "Datos invallidos" })
+    }
+
+    const newProduct = {
+        id: uuidv4(),
+        title,
+        description,
+        code,
+        price,
+        status,
+        stock,
+        category
+    }
+
     products.push(newProduct)
-    res.status(201).json(newProduct)
+    res.status(201).json({ message: "Producto agregado exitosamente" })
+})
+
+router.put("/:id", (req, res) => {
+    const productId = req.params.id
+    const { title, description, code, price, status, stock, category } = req.body
+    const productIndex = products.findIndex(product => product.id === productId)
+
+    if (productIndex === -1) {
+        res.status(404).json({ error: "Producto no encontrada" })
+    }
+
+    const originalProduct = products[productIndex]
+
+    const updatedProduct = {
+        ...originalProduct,
+        ...title ? { title } : {},
+        ...description ? { description } : {},
+        ...code ? { code } : {},
+        ...price ? { price } : {},
+        ...status ? { status } : {},
+        ...stock ? { stock } : {},
+        ...category ? { category } : {}
+    }
+
+    products[productIndex] = updatedProduct
+
+    res.status(200).json(updatedProduct)
+})
+
+router.delete("/:id", (req, res) => {
+    const productToDelete = req.params.id
+    const productIndex = products.findIndex(product => product.id === productToDelete)
+    if (productIndex === -1) {
+        res.status(404).json({ error: "Producto no encontrado" })
+    }
+
+    products.splice(productIndex, 1)
+    res.status(204).json({ message: "Producto eliminado" })
 })
 
 export default router
