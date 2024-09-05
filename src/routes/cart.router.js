@@ -13,10 +13,6 @@ router.post("/", (req, res) => {
         products
     }
 
-    if (products.lenght = 0) {
-        return res.status(400).json({ error: "Debe agregar productos para crear un carrito" })
-    }
-
     carts.push(newCart)
     res.status(201).json({ message: "Carrito agregado exitosamente" })
 })
@@ -29,13 +25,22 @@ router.get("/:id", (req, res) => {
     const id = req.params.id
     const cart = carts.find(cart => cart.id === id)
     if (!cart) {
-        return res.status(404).json({ error: "Carrito no encontrada" })
+        return res.status(404).json({ error: "Carrito no encontrado" })
     }
     res.status(200).json(cart)
 })
 
-router.post("/:id/products/:id", (req, res) => {
+router.post("/:id/products/:pid", (req, res) => {
+    const id = req.params.id
+    const pid = req.params.pid
 
+    const cart = carts.find(cart => cart.id === id)
+    if (!cart) {
+        return res.status(404).json({ error: "Carrito no encontrado" })
+    }
+    const product = {
+        
+    }
 })
 
 export default router

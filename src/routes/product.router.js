@@ -1,9 +1,24 @@
 import { Router } from "express"
+import fs from "fs";
 import { v4 as uuidv4 } from "uuid"
 
 const router = Router()
 
-const products = []
+const productsFilePath = 'products.json';
+
+function readProducts() {
+    try {
+        const data = fs.readFileSync(productsFilePath);
+        return JSON.parse(data);
+    } catch (error) {
+        return [];
+    }
+}
+function writeProducts(products) {
+    fs.writeFileSync(productsFilePath, JSON.stringify(products));
+}
+
+const products = readProducts();
 
 router.get("/", (req, res) => {
     res.json(products)
@@ -19,8 +34,8 @@ router.get("/:id", (req, res) => {
 })
 
 router.post("/", (req, res) => {
-    const { title, description, code, price, status, stock, category } = req.body
-    if (!title || !description || !code || !price || !status || !stock || !category) {
+    const { title, description, code, price, stock, category } = req.body
+    if (!title || !description || !code || !price || !stock || !category) {
         return response.status(400).json({ error: "Datos invallidos" })
     }
 
@@ -30,12 +45,13 @@ router.post("/", (req, res) => {
         description,
         code,
         price,
-        status,
+        status: true,
         stock,
         category
     }
 
     products.push(newProduct)
+    writeProducts(products)
     res.status(201).json({ message: "Producto agregado exitosamente" })
 })
 
