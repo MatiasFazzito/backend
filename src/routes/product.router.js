@@ -96,6 +96,7 @@ router.delete("/:id", (req, res) => {
     }
 
     products.splice(productIndex, 1)
+    writeProducts(products)
     res.status(204).json({ message: "Producto eliminado" })
 })
 
