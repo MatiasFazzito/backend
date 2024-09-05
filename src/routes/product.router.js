@@ -78,7 +78,7 @@ router.put("/:id", (req, res) => {
     }
 
     products[productIndex] = updatedProduct
-
+    writeProducts(products)
     res.status(200).json(updatedProduct)
 })
 
