@@ -6,6 +6,7 @@ const router = Router()
 
 const productsFilePath = 'products.json';
 
+// Función para leer los productos desde el archivo
 function readProducts() {
     try {
         const data = fs.readFileSync(productsFilePath);
@@ -14,10 +15,13 @@ function readProducts() {
         return [];
     }
 }
+
+// Función para escribir los productos en el archivo
 function writeProducts(products) {
     fs.writeFileSync(productsFilePath, JSON.stringify(products));
 }
 
+// Leemos los productos al iniciar la aplicación
 const products = readProducts();
 
 router.get("/", (req, res) => {
@@ -51,7 +55,9 @@ router.post("/", (req, res) => {
     }
 
     products.push(newProduct)
+
     writeProducts(products)
+
     res.status(201).json({ message: "Producto agregado exitosamente" })
 })
 
@@ -78,7 +84,7 @@ router.put("/:id", (req, res) => {
     }
 
     products[productIndex] = updatedProduct
-
+    writeProducts(products)
     res.status(200).json(updatedProduct)
 })
 
