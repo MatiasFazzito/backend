@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid"
 
 const router = Router()
 
-const productsFilePath = 'products.json';
+const productsFilePath = 'products.json'
 
 // Función para leer los productos desde el archivo
 function readProducts() {

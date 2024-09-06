@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use("/api/products", productRoutes)
 app.use("/api/carts", cartRoutes)
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
+/*const __dirname = dirname(fileURLToPath(import.meta.url))
 const publicPath = path.join(__dirname, "public")
 
-app.use("/static", express.static(publicPath))
+app.use("/static", express.static(publicPath))*/
