@@ -4,10 +4,10 @@ import { v4 as uuidv4 } from "uuid"
 
 const router = Router()
 
+//Funcionalidades FS
 const cartsFilePath = 'carts.json'
 const productsFilePath = 'products.json'
 
-// Función para leer los cart desde el archivo
 function readCarts() {
     try {
         const data = fs.readFileSync(cartsFilePath);
@@ -17,7 +17,6 @@ function readCarts() {
     }
 }
 
-// Función para escribir los cart en el archivo
 function writeCarts(carts) {
     fs.writeFileSync(cartsFilePath, JSON.stringify(carts));
 }
@@ -31,7 +30,7 @@ function readProducts() {
     }
 }
 
-// Leemos los cart al iniciar la aplicación
+//Routes
 const carts = readCarts();
 const products = readProducts();
 

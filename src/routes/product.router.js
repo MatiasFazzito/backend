@@ -4,9 +4,9 @@ import { v4 as uuidv4 } from "uuid"
 
 const router = Router()
 
+//Funcionalidades FS
 const productsFilePath = 'products.json'
 
-// Función para leer los productos desde el archivo
 function readProducts() {
     try {
         const data = fs.readFileSync(productsFilePath);
@@ -16,12 +16,11 @@ function readProducts() {
     }
 }
 
-// Función para escribir los productos en el archivo
 function writeProducts(products) {
     fs.writeFileSync(productsFilePath, JSON.stringify(products));
 }
 
-// Leemos los productos al iniciar la aplicación
+//Routes
 const products = readProducts();
 
 router.get("/", (req, res) => {
