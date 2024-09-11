@@ -8,7 +8,8 @@ const storage = multer.diskStorage({
         cb(null, __dirname + "/public/multi")
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname)
+        const timestamp = Date.now()
+        cb(null, `${timestamp}-${file.originalname}`)
     }
 })
 

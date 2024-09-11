@@ -22,7 +22,7 @@ function writeProducts(products) {
 }
 
 //Routes
-const products = readProducts();
+const products = readProducts()
 
 router.get("/", (req, res) => {
     res.json(products)
@@ -44,7 +44,7 @@ router.post("/", uploader.single("file"), (req, res) => {
     }
     if (!req.file) {
         return res.status(400).send({status:"error", error: "No se pudo cargar la imagen"})
-    }    
+    }
 
     const newProduct = {
         id: uuidv4(),
