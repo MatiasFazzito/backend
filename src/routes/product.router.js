@@ -39,7 +39,7 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
     const { title, description, code, price, stock, category } = req.body
     if (!title || !description || !code || !price || !stock || !category) {
-        return response.status(400).json({ error: "Datos invallidos" })
+        return res.status(400).json({ error: "Datos invallidos" })
     }
 
     const newProduct = {
