@@ -1,6 +1,7 @@
 import { Router } from "express"
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid"
+import { uploader } from "../utils.js"
 
 const router = Router()
 
@@ -36,11 +37,14 @@ router.get("/:id", (req, res) => {
     res.status(200).json(product)
 })
 
-router.post("/", (req, res) => {
+router.post("/", uploader.single("file"), (req, res) => {
     const { title, description, code, price, stock, category } = req.body
     if (!title || !description || !code || !price || !stock || !category) {
-        return response.status(400).json({ error: "Datos invallidos" })
+        return res.status(400).json({ error: "Datos invallidos" })
     }
+    if (!req.file) {
+        return req.file.path = "/image-placeholder.png"
+    } 
 
     const newProduct = {
         id: uuidv4(),
@@ -50,7 +54,8 @@ router.post("/", (req, res) => {
         price,
         status: true,
         stock,
-        category
+        category,
+        thumbnail: req.file.path
     }
 
     products.push(newProduct)
