@@ -43,8 +43,8 @@ router.post("/", uploader.single("file"), (req, res) => {
         return res.status(400).json({ error: "Datos invallidos" })
     }
     if (!req.file) {
-        return req.file.path = "/image-placeholder.png"
-    } 
+        return res.status(400).send({status:"error", error: "No se pudo cargar la imagen"})
+    }    
 
     const newProduct = {
         id: uuidv4(),
