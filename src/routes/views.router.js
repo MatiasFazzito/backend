@@ -3,6 +3,7 @@ import fs from "fs";
 
 const router = express.Router()
 
+//Funcionalidades FS
 const productsFilePath = 'products.json'
 
 function readProducts() {
@@ -14,14 +15,24 @@ function readProducts() {
     }
 }
 
+//Routes
 const products = readProducts()
 
 router.get("/", (req, res)=>{
+    res.render("index", {})
+})
+
+router.get("/productregistration", (req, res)=>{
     const testUser ={
-        name: "Matias"
+        name: "Matias",
+        role: "admin"
     }
 
-    res.render("index", {testUser})
+    res.render("productregistration", {
+        user: testUser,
+        isAdmin: testUser.role === "admin",
+        products
+    })
 })
 
 router.get("/indexproducts", (req, res)=>{
@@ -29,7 +40,6 @@ router.get("/indexproducts", (req, res)=>{
         name: "Matias",
         role: "admin"
     }
-    
 
     res.render("indexproducts", {
         user: testUser,
