@@ -1,4 +1,4 @@
-import path, { dirname } from "path"
+import { dirname } from "path"
 import { fileURLToPath } from "url"
 import multer from "multer"
 
@@ -15,7 +15,6 @@ const storage = multer.diskStorage({
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-export const publicPath = path.join(__dirname, "public")
 
 export const uploader = multer({storage})
 export default __dirname
