@@ -42,6 +42,9 @@ router.post("/", uploader.single("file"), (req, res) => {
     if (!title || !description || !code || !price || !stock || !category) {
         return res.status(400).json({ error: "Datos invallidos" })
     }
+    if (!req.file) {
+        return res.status(400).send({status:"error", error: "No se pudo cargar la imagen"})
+    }
 
     const newProduct = {
         id: uuidv4(),
