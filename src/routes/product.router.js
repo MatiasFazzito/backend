@@ -92,6 +92,8 @@ router.put("/:id", (req, res) => {
     res.status(200).json(updatedProduct)
 })
 
+
+//agregar event handler para boton
 router.delete("/:id", (req, res) => {
     const productToDelete = req.params.id
     const productIndex = products.findIndex(product => product.id === productToDelete)

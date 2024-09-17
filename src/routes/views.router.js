@@ -19,29 +19,25 @@ function readProducts() {
 const products = readProducts()
 
 router.get("/", (req, res)=>{
-    res.render("index", {})
-})
-
-router.get("/productregistration", (req, res)=>{
     const testUser ={
-        name: "Matias",
+        name: "admin",
         role: "admin"
     }
 
-    res.render("productregistration", {
+    res.render("home", {
         user: testUser,
         isAdmin: testUser.role === "admin",
         products
     })
 })
 
-router.get("/indexproducts", (req, res)=>{
+router.get("/realtimeproducts", (req, res)=>{
     const testUser ={
-        name: "Matias",
+        name: "admin",
         role: "admin"
     }
 
-    res.render("indexproducts", {
+    res.render("realtimeproducts", {
         user: testUser,
         isAdmin: testUser.role === "admin",
         products
