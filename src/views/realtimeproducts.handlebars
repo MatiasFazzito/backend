@@ -26,13 +26,7 @@
         <button type="submit" id="sendProduct">Guardar</button>
     </form>
     <div id="messageContainer"></div>
-
-    {{#each products}}
-    <div>
-        <p>{{this.title}} {{this.price}}</p> <button>X</button>
-    </div>
-    {{/each}}
-
+    <div id="productContainer"></div>
     {{else}}
     <p>No tienes permiso para agregar productos al listado</p>
     {{/if}}

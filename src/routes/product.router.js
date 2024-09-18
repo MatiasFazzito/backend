@@ -10,15 +10,15 @@ const productsFilePath = 'products.json'
 
 function readProducts() {
     try {
-        const data = fs.readFileSync(productsFilePath);
-        return JSON.parse(data);
+        const data = fs.readFileSync(productsFilePath)
+        return JSON.parse(data)
     } catch (error) {
-        return [];
+        return []
     }
 }
 
 function writeProducts(products) {
-    fs.writeFileSync(productsFilePath, JSON.stringify(products));
+    fs.writeFileSync(productsFilePath, JSON.stringify(products))
 }
 
 //Routes

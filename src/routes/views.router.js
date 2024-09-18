@@ -40,7 +40,6 @@ router.get("/realtimeproducts", (req, res)=>{
     res.render("realtimeproducts", {
         user: testUser,
         isAdmin: testUser.role === "admin",
-        products
     })
 })
 
