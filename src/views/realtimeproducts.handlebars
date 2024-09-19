@@ -1,7 +1,7 @@
 <div>
     <h1>{{user.name}} bienvenido al registro de productos</h1>
     {{#if isAdmin}}
-    <form action="/api/products" method="post" enctype="multipart/form-data">
+    <form id="productForm" action="/api/products" method="post" enctype="multipart/form-data">
         <label for="title">Nombre</label>
         <input type="text" id="title" name="title" required>
         <br>

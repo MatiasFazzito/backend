@@ -1,17 +1,17 @@
 import express from "express"
-import path from "path";
-import fs from "fs";
+import path from "path"
+import fs from "fs"
 import __dirname from "./utils.js"
 import productRoutes from "./routes/product.router.js"
 import cartRoutes from "./routes/cart.router.js"
 import viewsRoutes from "./routes/views.router.js"
 import usersRoutes from "./routes/users.router.js"
 import handlebars from "express-handlebars"
-import { Server } from "socket.io";
+import { Server } from "socket.io"
 
 const app = express()
 const httpServer = app.listen(8080, () => { console.log("listening on 8080") })
-const io = new Server(httpServer)
+export const io = new Server(httpServer)
 
 app.engine("handlebars", handlebars.engine())
 app.set("views", __dirname + "/views")
@@ -30,10 +30,10 @@ app.use(express.static(path.join(__dirname, "public")))
 const productsFilePath = 'products.json'
 function readProducts() {
     try {
-        const data = fs.readFileSync(productsFilePath);
-        return JSON.parse(data);
+        const data = fs.readFileSync(productsFilePath)
+        return JSON.parse(data)
     } catch (error) {
-        return [];
+        return []
     }
 }
 const products = readProducts()
@@ -42,7 +42,7 @@ io.on("connection", (socket) =>{
     console.log("Nuevo cliente conectado")
 
     socket.on("message", data =>{
-        console.log(data);
+        console.log(data)
     })
     io.emit("message", "Listo para agregar productos")
 

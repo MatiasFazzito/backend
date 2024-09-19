@@ -2,6 +2,7 @@ import { Router } from "express"
 import fs from "fs"
 import { v4 as uuidv4 } from "uuid"
 import { uploader } from "../utils.js"
+import { io } from "../app.js"
 
 const router = Router()
 
@@ -59,8 +60,10 @@ router.post("/", uploader.single("file"), (req, res) => {
     }
 
     products.push(newProduct)
-
+    
     writeProducts(products)
+
+    io.emit("productContainer", products)
 
     res.status(201).json({ message: "Producto agregado exitosamente" })
 })
@@ -88,7 +91,9 @@ router.put("/:id", (req, res) => {
     }
 
     products[productIndex] = updatedProduct
+    
     writeProducts(products)
+
     res.status(200).json(updatedProduct)
 })
 
@@ -102,8 +107,14 @@ router.delete("/:id", (req, res) => {
     }
 
     products.splice(productIndex, 1)
+
     writeProducts(products)
+
+    io.emit("productDeleted", productToDelete.id)
+
     res.status(204).json({ message: "Producto eliminado" })
 })
 
 export default router
+
+
