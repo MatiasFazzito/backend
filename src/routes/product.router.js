@@ -98,7 +98,6 @@ router.put("/:id", (req, res) => {
 })
 
 
-//agregar event handler para boton
 router.delete("/:id", (req, res) => {
     const productToDelete = req.params.id
     const productIndex = products.findIndex(product => product.id === productToDelete)
@@ -110,11 +109,7 @@ router.delete("/:id", (req, res) => {
 
     writeProducts(products)
 
-    io.emit("productDeleted", productToDelete.id)
-
-    res.status(204).json({ message: "Producto eliminado" })
+    res.status(204)
 })
 
 export default router
-
-

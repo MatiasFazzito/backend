@@ -23,15 +23,15 @@ socket.on("productContainer", data => {
         let eraseProduct = document.getElementById(`erase${e.id}`)
         eraseProduct.addEventListener("click", (e) => {
             fetch(`/api/products/${e.id}`, { method: "DELETE" })
-                .then(res => res.json())
-                .then(data => {
-                    messageContainer.innerHTML = `<p>${data.message}</p>`
-                    if (data.message === "Producto eliminado exitosamente") {
+                .then(res => {
+                    if (res.ok) {
+                        tarjetaProducto.remove()
                         socket.emit("productContainer")
                     }
-                }).catch((err) => {
+                })
+                .catch(err => {
                     console.error(err)
-                    messageContainer.innerHTML = `<p>Error: ${err.message}`
+                    messageContainer.innerHTML = `<p>Error: ${err.message}</p>`
                 })
         })
     })
@@ -54,11 +54,3 @@ productForm.addEventListener("submit", (e) => {
             messageContainer.innerHTML = `<p>Error: ${err.message}`
         })
 })
-
-
-/*socket.on("productDeleted", productId => {
-    const productToRemove = productContainer.querySelector(`div[data-id="${productId}"]`);
-    if (productToRemove) {
-      productToRemove.remove();
-    }
-  });*/
