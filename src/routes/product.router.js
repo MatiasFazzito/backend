@@ -101,15 +101,18 @@ router.put("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
     const productToDelete = req.params.id
     const productIndex = products.findIndex(product => product.id === productToDelete)
+  
     if (productIndex === -1) {
-        res.status(404).json({ error: "Producto no encontrado" })
+      res.status(404).json({ error: "Producto no encontrado" })
+      return
     }
-
+  
     products.splice(productIndex, 1)
-
     writeProducts(products)
-
-    res.status(204)
-})
+  
+    io.emit("productDeleted", productToDelete.id)
+  
+    res.status(204).send()
+  })
 
 export default router

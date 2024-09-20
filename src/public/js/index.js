@@ -11,27 +11,40 @@ socket.on("message", data => {
 
 socket.on("productContainer", data => {
     productContainer.innerHTML = ""
-    data.forEach(e => {
-        let tarjetaProducto = document.createElement("div")
+
+    data.forEach(product => {
+        const tarjetaProducto = document.createElement("div")
         tarjetaProducto.className = "tarjetaProducto"
+        tarjetaProducto.dataset.id = product.id
+
         tarjetaProducto.innerHTML = `
-            <h2>${e.title}</h2>
-            <p>${e.price}</p>
-            <button id="erase${e.id}">X</button>
-            `
+            <h2>${product.title}</h2>
+            <p>${product.price}</p>
+            <button data-id="${product.id}">Eliminar</button>
+        `
+
         productContainer.appendChild(tarjetaProducto)
-        let eraseProduct = document.getElementById(`erase${e.id}`)
-        eraseProduct.addEventListener("click", (e) => {
-            fetch(`/api/products/${e.id}`, { method: "DELETE" })
-                .then(res => {
-                    if (res.ok) {
+
+        const deleteButton = tarjetaProducto.querySelector("button")
+        deleteButton.addEventListener("click", () => {
+            const productId = deleteButton.dataset.id
+
+            fetch(`/api/products/${productId}`, {
+                method: "DELETE"
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Producto eliminado correctamente")
                         tarjetaProducto.remove()
-                        socket.emit("productContainer")
+                        socket.emit("productDeleted", productId)
+                    } else {
+                        console.error("Error al eliminar el producto")
+                        messageContainer.innerHTML = `<p>Error: ${response.statusText}</p>`
                     }
                 })
-                .catch(err => {
-                    console.error(err)
-                    messageContainer.innerHTML = `<p>Error: ${err.message}</p>`
+                .catch(error => {
+                    console.error(error)
+                    messageContainer.innerHTML = `<p>Error: ${error.message}</p>`
                 })
         })
     })
