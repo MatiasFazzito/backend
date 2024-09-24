@@ -1,6 +1,8 @@
 import express from "express"
 import path from "path"
 import fs from "fs"
+import dotenv from "dotenv"
+import mongoose from "mongoose"
 import __dirname from "./utils.js"
 import productRoutes from "./routes/product.router.js"
 import cartRoutes from "./routes/cart.router.js"
@@ -26,6 +28,14 @@ app.use("/api/products", productRoutes)
 app.use("/api/carts", cartRoutes)
 app.use(express.static(path.join(__dirname, "public")))
 
+dotenv.config()
+
+const uriConection = process.env.URIMONGO
+
+mongoose.connect(uriConection)
+    .then(console.log("Conectado a mongo"))
+    .catch((error) => console.error("Error en conexion:", error))
+
 //logica para enviar array de productos al socket
 const productsFilePath = 'products.json'
 function readProducts() {
@@ -38,15 +48,15 @@ function readProducts() {
 }
 const products = readProducts()
 
-io.on("connection", (socket) =>{
+io.on("connection", (socket) => {
     console.log("Nuevo cliente conectado")
 
-    socket.on("message", data =>{
+    socket.on("message", data => {
         console.log(data)
     })
     io.emit("message", "Listo para agregar productos")
 
-    socket.on("productContainer", data=>{
+    socket.on("productContainer", data => {
         data
     })
     io.emit("productContainer", products)
