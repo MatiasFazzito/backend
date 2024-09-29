@@ -8,12 +8,3 @@ body{
     margin: 1%;
 }
 
-.tarjetaProducto{
-    margin: 1%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    width: 50%;
-    border: solid black 1px;
-    display: flex;
-    justify-content: space-around;
-}

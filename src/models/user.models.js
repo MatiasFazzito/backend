@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-
 const { Schema } = mongoose
 
 const userScheme = new Schema({
@@ -11,6 +10,6 @@ const userScheme = new Schema({
     }
 })
 
-const UserModel = mongoose.model("User", userScheme)
+const UserModel = mongoose.model("users", userScheme)
 
 export default UserModel

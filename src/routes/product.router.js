@@ -1,118 +1,79 @@
 import { Router } from "express"
-import fs from "fs"
-import { v4 as uuidv4 } from "uuid"
-import { uploader } from "../utils.js"
-import { io } from "../app.js"
+import ProductModel from "../models/products.models.js"
 
 const router = Router()
 
-//Funcionalidades FS
-const productsFilePath = 'products.json'
-
-function readProducts() {
+router.post("/", async (req, res) => {
     try {
-        const data = fs.readFileSync(productsFilePath)
-        return JSON.parse(data)
+        const newProduct = new ProductModel(req.body)
+        
+        await newProduct.save()
+
+        res.render("product", { product: newProduct.toObject() })
+
     } catch (error) {
-        return []
+
+        console.log(error);
+        
+        res.render("error", { error: "Error al crear producto" })
     }
-}
-
-function writeProducts(products) {
-    fs.writeFileSync(productsFilePath, JSON.stringify(products))
-}
-
-//Routes
-const products = readProducts()
-
-router.get("/", (req, res) => {
-    res.json(products)
 })
 
-router.get("/:id", (req, res) => {
-    const id = req.params.id
-    const product = products.find(product => product.id === id)
-    if (!product) {
-        return res.status(404).json({ error: "Producto no encontrada" })
+router.get("/", async (req, res) => {
+    try {
+        const products = await ProductModel.find()
+
+
+        res.render("products", { products: products.map(product => product.toObject()) })
+
+    } catch (error) {
+        res.render("error", { error: "Error al buscar productos" })
     }
-    res.status(200).json(product)
 })
 
-router.post("/", uploader.single("file"), (req, res) => {
-    const { title, description, code, price, stock, category } = req.body
-    if (!title || !description || !code || !price || !stock || !category) {
-        return res.status(400).json({ error: "Datos invallidos" })
+router.get("/:id", async (req, res) => {
+    try {
+        const product = await ProductModel.findById(req.params.id)
+
+        if (!product) {
+            return res.render("error", { error: "Producto no encontrado" })
+        }
+        res.render("product", { product: product.toObject() })
+
+    } catch (error) {
+        res.render("error", { error: "Error al buscar productos" })
     }
-    if (!req.file) {
-        return res.status(400).send({status:"error", error: "No se pudo cargar la imagen"})
-    }
-
-    const newProduct = {
-        id: uuidv4(),
-        title,
-        description,
-        code,
-        price,
-        status: true,
-        stock,
-        category,
-        thumbnail: req.file.path
-    }
-
-    products.push(newProduct)
-    
-    writeProducts(products)
-
-    io.emit("productContainer", products)
-
-    res.status(201).json({ message: "Producto agregado exitosamente" })
 })
 
-router.put("/:id", (req, res) => {
-    const productId = req.params.id
-    const { title, description, code, price, status, stock, category } = req.body
-    const productIndex = products.findIndex(product => product.id === productId)
+router.put("/:id", async (req, res) => {
+    try {
+        const product = await ProductModel.findByIdAndUpdate(req.params.id, req.body)
 
-    if (productIndex === -1) {
-        res.status(404).json({ error: "Producto no encontrada" })
+        if (!product) {
+            return res.render("error", { error: "Producto no encontrado" })
+        }
+
+        res.redirect("/product")
+
+    } catch (error) {
+        res.render("error", { error: "Error al buscar productos" })
     }
-
-    const originalProduct = products[productIndex]
-
-    const updatedProduct = {
-        ...originalProduct,
-        ...title ? { title } : {},
-        ...description ? { description } : {},
-        ...code ? { code } : {},
-        ...price ? { price } : {},
-        ...status ? { status } : {},
-        ...stock ? { stock } : {},
-        ...category ? { category } : {}
-    }
-
-    products[productIndex] = updatedProduct
-    
-    writeProducts(products)
-
-    res.status(200).json(updatedProduct)
 })
 
+router.delete("/:id", async (req, res) => {
+    try {
+        const product = await ProductModel.findByIdAndDelete(req.params.id)
 
-router.delete("/:id", (req, res) => {
-    const productToDelete = req.params.id
-    const productIndex = products.findIndex(product => product.id === productToDelete)
-  
-    if (productIndex === -1) {
-      res.status(404).json({ error: "Producto no encontrado" })
-      return
+        if (!product) {
+            return res.render("error", { error: "Producto no encontrado" })
+        }
+
+        res.redirect("/product")
+
+    } catch (error) {
+        res.render("error", { error: "Error al buscar productos" })
     }
-  
-    products.splice(productIndex, 1)
-    writeProducts(products)
-  
-    io.emit("productDeleted", productToDelete.id)
-  
-    res.status(204).send()
-  })
+})
+
 
 export default router

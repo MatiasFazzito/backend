@@ -1,0 +1,10 @@
+<div class="product-container"></div>
+    <h2>{{product.title}}</h2>
+    <p class="price">Precio: ${{product.price}}</p>
+    <p class="description">{{product.description}}</p>
+    <p class="id">ID: {{product._id}}</p>
+    <form action="/product/{{product._id}}?_method=DELETE" method="POST" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit">Eliminar</button>
+    </form>
+</div>

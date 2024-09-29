@@ -3,7 +3,7 @@ import UserModel from "../models/user.models.js"
 
 const userRouter = Router()
 
-userRouter.post("/users", async (req, res) => {
+userRouter.post("/", async (req, res) => {
     try {
         const user = new UserModel(req.body)
         console.log("El usuario es: ", user)
@@ -15,17 +15,17 @@ userRouter.post("/users", async (req, res) => {
     }
 })
 
-userRouter.get("/users", async (req, res) => {
+userRouter.get("/", async (req, res) => {
     try {
         const users = await UserModel.find({})
-        console.log("users:", users)
+        res.send(users)
 
     } catch (error) {
         res.status(500).send(error)
     }
 })
 
-userRouter.get("/users/:id", async (req, res) => {
+userRouter.get("/:id", async (req, res) => {
     try {
         const user = await UserModel.findById(req.params.id)
         if (!user) {
@@ -41,7 +41,7 @@ userRouter.get("/users/:id", async (req, res) => {
     }
 })
 
-userRouter.put("/users/:id", async (req, res) => {
+userRouter.put("/:id", async (req, res) => {
     try {
         const user = await UserModel.findByIdAndUpdate(req.params.id, req.body)
         if (!user) {
@@ -57,7 +57,7 @@ userRouter.put("/users/:id", async (req, res) => {
     }
 })
 
-userRouter.delete("/users/:id", async (req, res)=>{
+userRouter.delete("/:id", async (req, res)=>{
     try {
         const user = await UserModel.findByIdAndDelete(req.params.id)
         if (!user) {
