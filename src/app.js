@@ -33,5 +33,5 @@ app.set("view engine", "handlebars")
 
 app.use("/", viewsRoutes)
 app.use("/users", usersRoutes)
-app.use("/products", productRoutes)
+app.use("/product", productRoutes)
 app.use(express.static(path.join(__dirname, "public")))

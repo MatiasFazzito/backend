@@ -4,7 +4,28 @@
     box-sizing: border-box;
 }
 
-body{
+.tarjetaProducto {
     margin: 1%;
+    padding: 1%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    width: 90%;
+    border: 2px solid black;
+    font-size: 1rem;
+    background-color: #f5deb3;
 }
 
+footer {
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    margin: 0;
+    background-color: #3f3c3c;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 2rem;
+    width: 100%;
+    height: 10%;
+}

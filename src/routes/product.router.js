@@ -12,9 +12,6 @@ router.post("/", async (req, res) => {
         res.render("product", { product: newProduct.toObject() })
 
     } catch (error) {
-
-        console.log(error);
-        
         res.render("error", { error: "Error al crear producto" })
     }
 })
@@ -38,6 +35,7 @@ router.get("/:id", async (req, res) => {
         if (!product) {
             return res.render("error", { error: "Producto no encontrado" })
         }
+        
         res.render("product", { product: product.toObject() })
 
     } catch (error) {

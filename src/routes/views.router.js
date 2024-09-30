@@ -6,11 +6,7 @@ router.get("/", (req, res) =>{
     res.render("home")
 } )
 
-router.get("/products", (req, res) =>{
-    res.render("products")
-})
-
-router.get("/products/addproduct", (req, res) =>{
+router.get("/product/addproduct", (req, res) =>{
     res.render("addproduct")
 })
 
