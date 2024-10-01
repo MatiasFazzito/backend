@@ -1,12 +1,12 @@
-import { Router } from "express"
-import UserModel from "../models/user.models.js"
+import { Router } from 'express'
+import UserModel from '../models/user.models.js'
 
-const userRouter = Router()
+const router = Router()
 
-userRouter.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const user = new UserModel(req.body)
-        console.log("El usuario es: ", user)
+        console.log('El usuario es: ', user)
 
         await user.save()
         res.status(200).send(user)
@@ -15,7 +15,7 @@ userRouter.post("/", async (req, res) => {
     }
 })
 
-userRouter.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const users = await UserModel.find({})
         res.send(users)
@@ -25,52 +25,52 @@ userRouter.get("/", async (req, res) => {
     }
 })
 
-userRouter.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const user = await UserModel.findById(req.params.id)
         if (!user) {
-            return res.status(404).send({ message: "Usuario no encontrado", error})
+            return res.status(404).send({ message: 'Usuario no encontrado', error})
         }
         res.send(user)
 
     } catch (error) {
         res.status(500).send({
-            message: "Error al buscar",
+            message: 'Error al buscar',
             error
         })
     }
 })
 
-userRouter.put("/:id", async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
         const user = await UserModel.findByIdAndUpdate(req.params.id, req.body)
         if (!user) {
-            return res.status(404).send({message: "Usuario no encontrado", error})
+            return res.status(404).send({message: 'Usuario no encontrado', error})
         }
         res.send(user)
 
     } catch (error) {
         res.status(500).send({
-            message: "Error al buscar",
+            message: 'Error al buscar',
             error
         })
     }
 })
 
-userRouter.delete("/:id", async (req, res)=>{
+router.delete('/:id', async (req, res)=>{
     try {
         const user = await UserModel.findByIdAndDelete(req.params.id)
         if (!user) {
-            return res.status(404).send({message: "Usuario no encontrado", error})
+            return res.status(404).send({message: 'Usuario no encontrado', error})
         }
         res.send(user)
 
     } catch (error) {
         res.status(500).send({
-            message: "Error al buscar",
+            message: 'Error al buscar',
             error
         })
     }
 })
 
-export default userRouter
+export default router

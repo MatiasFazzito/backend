@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 const productsSchema = new Schema({
@@ -10,6 +10,6 @@ const productsSchema = new Schema({
     category: { type: String, required: true }
 })
 
-const ProductModel = mongoose.model("products", productsSchema)
+const ProductModel = mongoose.model('products', productsSchema)
 
 export default ProductModel
