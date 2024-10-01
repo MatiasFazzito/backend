@@ -4,9 +4,11 @@ const { Schema } = mongoose
 const userScheme = new Schema({
     firstName: String,
     lastName: String,
+    username: String,
     email: {
         type: String,
-        unique: true
+        unique: true,
+        index: true
     }
 })
 
