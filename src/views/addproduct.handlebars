@@ -1,7 +1,7 @@
 <div>
     <h1>Insertar nuevo producto</h1>
 
-    <form action='/product' method='POST' enctype='application/x-www-form-urlencoded'>
+    <form action='/product' method='POST' enctype='multipart/form-data'>
         <label for='title'>Nombre</label>
         <input type='text' id='title' name='title' required>
         <br>
@@ -19,6 +19,8 @@
         <br>
         <label for='category'>Categoria</label>
         <input type='text' id='category' name='category' required>
+        <br>
+        <input type="file" name="file" id="file">
         <br>
         <button type='submit'>Guardar</button>
     </form>

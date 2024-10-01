@@ -1,11 +1,13 @@
 import { Router } from 'express'
 import ProductModel from '../models/products.models.js'
+import { uploader } from '../utils.js'
 
 const router = Router()
 
-router.post('/', async (req, res) => {
+router.post('/', uploader.single('file'), async (req, res) => {
     try {
         const newProduct = new ProductModel(req.body)
+        newProduct.thumbnail = req.file.path
         
         await newProduct.save()
 
@@ -35,7 +37,7 @@ router.get('/:id', async (req, res) => {
         if (!product) {
             return res.render('error', { error: 'Producto no encontrado' })
         }
-        
+
         res.render('product', { product: product.toObject() })
 
     } catch (error) {
