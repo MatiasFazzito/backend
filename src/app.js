@@ -28,6 +28,6 @@ app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
 
 app.use('/', viewsRoutes)
-app.use('/api/product', productRoutes)
-app.use('/api/carts', cartRoutes)
+app.use('/product', productRoutes)
+app.use('/cart', cartRoutes)
 app.use(express.static(__dirname + '/public'))

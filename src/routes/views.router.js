@@ -6,7 +6,7 @@ router.get('/', (req, res) =>{
     res.render('home')
 } )
 
-router.get('/product/addproduct', (req, res) =>{
+router.get('/addproduct', (req, res) =>{
     res.render('addproduct')
 })
 

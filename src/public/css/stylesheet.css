@@ -17,6 +17,19 @@
     background-color: #f5deb3;
 }
 
+.detalleProducto{
+    margin: 1%;
+    padding: 1%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    width: 90%;
+    border: 2px solid black;
+    font-size: 1rem;
+    background-color: #f5deb3;
+}
+
 footer {
     position: fixed;
     bottom: 0;
