@@ -1,5 +1,5 @@
 import { Router } from "express"
-import CartModel from "../models/cart.models"
+//import CartModel from "../models/cart.models"
 
 const router = Router()
 
