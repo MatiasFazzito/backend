@@ -9,7 +9,7 @@ import viewsRoutes from './routes/views.router.js'
 import cartRoutes from './routes/cart.router.js'
 
 const app = express()
-const httpServer = app.listen(8080, () => { console.log('listening on 8080') })
+app.listen(8080, () => { console.log('listening on 8080') })
 
 dotenv.config()
 

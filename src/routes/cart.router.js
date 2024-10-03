@@ -1,5 +1,5 @@
 import { Router } from "express"
-//import CartModel from "../models/cart.models"
+import CartModel from "../models/cart.models.js"
 
 const router = Router()
 
@@ -11,7 +11,7 @@ router.get("/", (req,res)=>{
     
 })
 
-router.get("/:id", (req,res)=>{
+router.get("/:cid", (req,res)=>{
     
 })
 
