@@ -7,7 +7,7 @@ import { Server } from 'socket.io'
 import __dirname from './utils.js'
 import productRoutes from './routes/product.router.js'
 import viewsRoutes from './routes/views.router.js'
-import usersRoutes from './routes/users.router.js'
+import cartRoutes from './routes/cart.router.js'
 
 const app = express()
 const httpServer = app.listen(8080, () => { console.log('listening on 8080') })
@@ -30,6 +30,6 @@ app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
 
 app.use('/', viewsRoutes)
-app.use('/users', usersRoutes)
-app.use('/product', productRoutes)
+app.use('/api/product', productRoutes)
+app.use('/api/carts', cartRoutes)
 app.use(express.static(__dirname + '/public'))
