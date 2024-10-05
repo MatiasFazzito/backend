@@ -3,32 +3,68 @@ import CartModel from "../models/cart.models.js"
 
 const router = Router()
 
-router.post("/", (req,res)=>{
+router.post("/", async (req, res) => {
+    try {
+        const newcart = new CartModel(req.body)
 
+        await newcart.save()
+
+        res.render('cart', {cart: newcart.toObject()})
+
+    } catch (error) {
+        res.render('error', { error: 'Error al crear carrito' })
+    }
 })
 
-router.get("/", (req,res)=>{
-    
+router.get("/", async (req, res) => {
+    try {
+        const carts = await CartModel.find()
+
+
+        res.render('carts', { carts: carts.map(cart => cart.toObject()) })
+    } catch (error) {
+        res.render('error', { error: 'Error al mostrar carritos' })
+    }
 })
 
-router.get("/:cid", (req,res)=>{
-    
+router.get("/:cid", async (req, res) => {
+    try {
+
+    } catch (error) {
+        res.render('error', { error: 'Error al mostrar carrito' })
+    }
 })
 
-router.put("/:cid", (req,res)=>{
-    
+router.put("/:cid", async (req, res) => {
+    try {
+
+    } catch (error) {
+        res.render('error', { error: 'Error al modificar carrito' })
+    }
 })
 
-router.put("/:cid/product/:pid", (req,res)=>{
-    
+router.put("/:cid/product/:pid", async (req, res) => {
+    try {
+
+    } catch (error) {
+        res.render('error', { error: 'Error al modificar producto en carrito' })
+    }
 })
 
-router.delete("/:cid", (req,res)=>{
-    
+router.delete("/:cid", async (req, res) => {
+    try {
+
+    } catch (error) {
+        res.render('error', { error: 'Error al eliminar carrito' })
+    }
 })
 
-router.delete("/:cid/product/:pid", (req,res)=>{
-    
+router.delete("/:cid/product/:pid", async (req, res) => {
+    try {
+
+    } catch (error) {
+        res.render('error', { error: 'Error al eliminar producto en carrito' })
+    }
 })
 
 export default router
