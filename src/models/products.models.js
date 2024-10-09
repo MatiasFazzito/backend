@@ -9,9 +9,10 @@ const productsSchema = new Schema({
     code: { type: String, required: true },
     price: { type: Number, required: true },
     stock: { type: Number, required: true },
-    category: { type: String, required: true },
+    category: { type: String, required: true},
     thumbnail: {type: String, required: true}
 })
+productsSchema.index({title: 1})
 
 productsSchema.plugin(mongoosePaginate)
 

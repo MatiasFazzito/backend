@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import ProductModel from '../models/products.models.js'
 import { uploader } from '../utils.js'
+import CartModel from "../models/cart.models.js"
 
 const router = Router()
 
@@ -86,6 +87,30 @@ router.delete('/:id', async (req, res) => {
 
     } catch (error) {
         res.render('error', { error: 'Error al buscar productos' })
+    }
+})
+
+router.post('/:id/addToCart', async (req, res) => {
+    try {
+        const { quantity = 1 } = req.body
+        const cartId = req.body.cartId
+
+        const product = await ProductModel.findById(req.params.id)
+        const cart = await CartModel.findById(cartId)
+
+        const productIndex = cart.products.findIndex(item => item.product.toString() === product._id.toString())
+
+        if (productIndex !== -1) {
+            cart.products[productIndex].quantity = Number(cart.products[productIndex].quantity) + Number(quantity)
+        } else {
+            cart.products.push({ product: product._id, quantity })
+        }
+
+        await cart.save()
+
+        res.redirect(`/cart/${cartId}`)
+    } catch (error) {
+        res.render("error", { error: 'Error al agregar el producto al carrito' })
     }
 })
 

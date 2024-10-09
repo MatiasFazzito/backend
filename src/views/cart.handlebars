@@ -1,0 +1,17 @@
+<div class='detalleCarrito'>
+    <h1 class="title">{{cart.title}}</h1>
+    <p class='id'>ID: {{cart._id}}</p>
+    <ul>
+        {{#each cart.products}}
+        <li>
+            <p>Producto: {{this.product.title}}</p>
+            <p>Precio unitario: ${{this.product.price}}</p>
+            <p>Cantidad: {{this.quantity}}</p>
+        </li>
+        {{/each}}
+    </ul>
+    <form action='/cart/{{cart._id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
+        <input type='hidden' name='_method' value='DELETE'>
+        <button type='submit'>Eliminar productos</button>
+    </form>
+</div>
