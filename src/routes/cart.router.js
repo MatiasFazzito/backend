@@ -30,6 +30,17 @@ router.get('/allcarts', async (req, res) => {
     }
 })
 
+router.get('/product/allproducts', async (req, res) => {
+    try {
+        const products = await ProductModel.find()
+
+        res.json(products)
+    } catch (error) {
+        console.error('Error fetching products:', error)
+        res.status(500).send('Error fetching products')
+    }
+})
+
 router.get("/", async (req, res) => {
     try {
         const carts = await CartModel.find()
@@ -44,7 +55,7 @@ router.get("/:cid", async (req, res) => {
     try {
         const cart = await CartModel.findById(req.params.cid).populate("products.product")
 
-        res.render('cart', {cart: cart.toObject()})
+        res.render('cart', { cart: cart.toObject() })
 
     } catch (error) {
         res.render('error', { error: 'Error al mostrar carrito' })
@@ -54,24 +65,27 @@ router.get("/:cid", async (req, res) => {
 router.put("/:cid", async (req, res) => {
     try {
         const { cid } = req.params
-        const { products } = req.body
+        const { productId, quantity } = req.body
 
-        if (!Array.isArray(products)) {
-            return res.render("error", { error: 'Los productos deben ser un arreglo' })
+        const cart = await CartModel.findById(cid)
+        const product = await ProductModel.findById(productId)
+        if (!product) {
+            return res.render("error", { error: 'Debe seleccionar un producto valido' })
         }
 
-        const cart = await Cart.findById(cid)
-        if (!cart) {
-            return res.render("error", { error: 'Carrito no encontrado' })
+        const existingProduct = cart.products.find(p => p.product._id.toString() === productId)
+        if (existingProduct) {
+            existingProduct.quantity += parseInt(quantity)
+        } else {
+            cart.products.push({ product: product._id, quantity: parseInt(quantity) })
         }
 
-        CartModel.products = products;
-        await CartModel.save()
+        await cart.save()
 
-        res.render("cart", { cart: cart.toObject() })
+        res.redirect(`/cart/${cid}`)
 
     } catch (error) {
-        res.render('error', { error: 'Error al modificar carrito' })
+        res.render('error', { error: 'Error al agregar productos al carrito' })
     }
 })
 

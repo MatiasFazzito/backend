@@ -1,17 +1,33 @@
 <div class='detalleCarrito'>
     <h1 class="title">{{cart.title}}</h1>
     <p class='id'>ID: {{cart._id}}</p>
+    <a href="/cart/{{cart._id}}">Modificar carrito</a>
     <ul>
         {{#each cart.products}}
-        <li>
+        <li class="productDetail">
             <p>Producto: {{this.product.title}}</p>
             <p>Precio unitario: ${{this.product.price}}</p>
             <p>Cantidad: {{this.quantity}}</p>
+            <a href='/product/{{this.product._id}}'>Ver detalle de producto</a>
         </li>
         {{/each}}
     </ul>
+    <form action='/cart/{{cart._id}}?_method=PUT' method="post" enctype='application/x-www-form-urlencoded'>
+        <label for="productId">Producto:</label>
+        <select id="productId" name="productId" required>
+            <option value="">Selecciona un producto</option>
+            {{#each availableProduct}}
+            <option value="{{this._id}}">{{this.title}}</option>
+            {{/each}}
+        </select>
+        <label for="quantity">Cantidad:</label>
+        <input type="number" id="quantity" name="quantity" min="1" required>
+        <button type="submit">Agregar al carrito</button>
+    </form>
     <form action='/cart/{{cart._id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
         <input type='hidden' name='_method' value='DELETE'>
         <button type='submit'>Eliminar productos</button>
     </form>
 </div>
+
+<script src="/js/script.js"></script>
