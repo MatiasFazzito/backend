@@ -24,17 +24,25 @@ router.get('/', async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1
         const rows = parseInt(req.query.rows) || 5
+        const category = req.query.category
+        const sortField = req.query.sortField || 'price'
+        const sortOrder = req.query.sortOrder || 'asc'
 
         const options = {
             page,
             limit: rows,
+            sort: { [sortField]: sortOrder === 'asc' ? 1 : -1 },
             lean: true
+        }
+
+        if (category) {
+            options.match = { category };
         }
 
         const products = await ProductModel.paginate({}, options)
 
-        products.prevLink = products.hasPrevPage ? `/product?page=${products.prevPage}` : ''
-        products.nextLink = products.hasNextPage ? `/product?page=${products.nextPage}` : ''
+        products.prevLink = products.hasPrevPage ? `/product?page=${products.prevPage}&${category ? `category=${category}` : ''}&sortOrder=${sortOrder}`: ''
+        products.nextLink = products.hasNextPage ? `/product?page=${products.nextPage}&${category ? `category=${category}` : ''}&sortOrder=${sortOrder}`: ''
 
         products.isValid = products.docs.length > 0
 
