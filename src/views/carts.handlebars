@@ -1,23 +1,24 @@
-<div>
-    <h1>Listado de carritos</h1>
-    <ul>
-        {{#each carts}}
-        <li class='tarjetaCarrito'>
-            <h2>{{this._id}}</h2>
-            <a href='/cart/{{this._id}}'>Ver detalle</a>
-        </li>
-        {{/each}}
-    </ul>
-</div>
-<br>
-<div>
-    {{#if carts.hasPrevPage}}
+<div class="cartList">
+    <div class="cartContainer">
+        <h1>Listado de carritos</h1>
+        <ul>
+            {{#each carts}}
+            <li class='cartCard'>
+                <h2>{{this._id}}</h2>
+                <h2>{{this.title}}</h2>
+                <a href='/cart/{{this._id}}'>Ver detalle</a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+    <br>
+    <div class="cartPagination">
+        {{#if carts.hasPrevPage}}
         <a href={{carts.prevLink}}>Anterior</a>
-    {{/if}}
-    &nbsp;
-    {{carts.page}}
-    &nbsp;
-    {{#if carts.hasNextPage}}
+        {{/if}}
+        {{carts.page}}
+        {{#if carts.hasNextPage}}
         <a href={{carts.nextLink}}>Siguiente</a>
-    {{/if}}
+        {{/if}}
+    </div>
 </div>

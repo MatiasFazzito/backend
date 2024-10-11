@@ -1,8 +1,9 @@
-<div>
-    <h1>Ingresa tu nombre para crear tu carrito</h1>
+<div class="main">
+
+    <h1 class="addCart">Ingresa tu nombre para crear tu carrito</h1>
 
     <form action='/cart' method='POST' enctype="application/x-www-form-urlencoded">
-        <label for='title'>Nombre</label>
+        <label for='title'>Nombre:</label>
         <input type='text' id='title' name='title' required>
         <button type='submit'>Guardar</button>
     </form>

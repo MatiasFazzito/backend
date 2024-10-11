@@ -89,43 +89,6 @@ router.put("/:cid", async (req, res) => {
     }
 })
 
-router.put("/:cid/product/:pid", async (req, res) => {
-    try {
-        const { cid, pid } = req.params
-        const { quantity } = req.body
-
-        if (!quantity || quantity <= 0) {
-            return res.render("error", { error: 'Cantidad inválida' })
-        }
-
-        const cart = await CartModel.findById(cid);
-        if (!cart) {
-            return res.render("error", { error: 'Carrito no encontrado' })
-        }
-
-        const product = await ProductModel.findById(pid)
-
-        if (!product) {
-            return res.render("error", { error: 'Producto no encontrado' })
-        }
-
-        const productIndex = CartModel.products.findIndex(p => p._id.toString() === pid)
-
-        if (productIndex !== -1) {
-            CartModel.products[productIndex].quantity = quantity
-        } else {
-            CartModel.products.push({ product: product._id, quantity })
-        }
-
-        await CartModel.save()
-
-        res.render("cart", { cart: cart.toObject() })
-
-    } catch (error) {
-        res.render('error', { error: 'Error al modificar producto en carrito' })
-    }
-})
-
 router.delete("/:cid", async (req, res) => {
     try {
         const { cid } = req.params

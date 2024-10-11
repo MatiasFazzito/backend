@@ -1,8 +1,7 @@
-<div class='detalleCarrito'>
+<div class='cartDetail'>
     <h1 class="title">{{cart.title}}</h1>
-    <p class='id'>ID: {{cart._id}}</p>
-    <a href="/cart/{{cart._id}}">Modificar carrito</a>
-    <ul>
+    <h2 class='id'>ID: {{cart._id}}</h2>
+    <ul class="productList">
         {{#each cart.products}}
         <li class="productDetail">
             <p>Producto: {{this.product.title}}</p>
@@ -12,7 +11,7 @@
         </li>
         {{/each}}
     </ul>
-    <form action='/cart/{{cart._id}}?_method=PUT' method="post" enctype='application/x-www-form-urlencoded'>
+    <form class="addProduct" action='/cart/{{cart._id}}?_method=PUT' method="post" enctype='application/x-www-form-urlencoded'>
         <label for="productId">Producto:</label>
         <select id="productId" name="productId" required>
             <option value="">Selecciona un producto</option>
@@ -24,10 +23,10 @@
         <input type="number" id="quantity" name="quantity" min="1" required>
         <button type="submit">Agregar al carrito</button>
     </form>
-    <form action='/cart/{{cart._id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
+    <form class="cleanCart" action='/cart/{{cart._id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
         <input type='hidden' name='_method' value='DELETE'>
-        <button type='submit'>Eliminar productos</button>
+        <button type='submit'>Vaciar carrito</button>
     </form>
 </div>
 
-<script src="/js/script.js"></script>
+<script src="/js/productScript.js"></script>
