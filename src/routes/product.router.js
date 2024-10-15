@@ -32,17 +32,14 @@ router.get('/', async (req, res) => {
             page,
             limit: rows,
             sort: { [sortField]: sortOrder === 'asc' ? 1 : -1 },
+            filter: category ? { category } : {},
             lean: true
         }
 
-        if (category) {
-            options.match = { category };
-        }
+        const products = await ProductModel.paginate(category ? { category } : {}, options)
 
-        const products = await ProductModel.paginate({}, options)
-
-        products.prevLink = products.hasPrevPage ? `/product?page=${products.prevPage}&${category ? `category=${category}` : ''}&sortOrder=${sortOrder}`: ''
-        products.nextLink = products.hasNextPage ? `/product?page=${products.nextPage}&${category ? `category=${category}` : ''}&sortOrder=${sortOrder}`: ''
+        products.prevLink = products.hasPrevPage ? `/product?page=${products.prevPage}&sortOrder=${sortOrder}&${category ? `category=${category}` : 'category='}`: ''
+        products.nextLink = products.hasNextPage ? `/product?page=${products.nextPage}&sortOrder=${sortOrder}&${category ? `category=${category}` : 'category='}`: ''
 
         products.isValid = products.docs.length > 0
 

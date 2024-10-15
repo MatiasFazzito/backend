@@ -41,7 +41,17 @@ body header nav button a {
 }
 
 body .main {
+    margin: 1%;
     padding: 1%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border: 2px solid black;
+    font-size: 1rem;
+    background-color: #B0C0BC;
 }
 
 body .main .addCart {
@@ -87,7 +97,6 @@ body .productList .productContainer .productCard {
     justify-content: space-between;
     align-items: center;
     text-align: center;
-    width: 90%;
     border: 2px solid black;
     font-size: 1rem;
     background-color: #B0C0BC;
@@ -118,7 +127,6 @@ body .productDetail {
     flex-wrap: wrap;
     align-items: center;
     text-align: center;
-    width: 90%;
     border: 2px solid black;
     font-size: 1rem;
     background-color: #B0C0BC;
@@ -140,6 +148,7 @@ body .addProduct {
     display: flex;
     flex-direction: column;
     align-items: center;
+
 }
 
 body .addProduct h1 {
@@ -152,11 +161,11 @@ body .addProduct form {
     border: 1px solid #000000;
     width: 40%;
     padding: 2%;
+    background-color: #B0C0BC;
 }
 
 body .addProduct form input {
     height: 1.5rem;
-    width: 80%;
     margin: 1%;
     font-size: 1rem;
     font-weight: bold;
@@ -190,7 +199,6 @@ body .cartList .cartContainer .cartCard {
     justify-content: space-around;
     align-items: center;
     text-align: center;
-    width: 90%;
     border: 2px solid black;
     font-size: 1rem;
     background-color: #B0C0BC;
@@ -215,7 +223,6 @@ body .cartDetail {
     justify-content: space-between;
     align-items: center;
     text-align: center;
-    width: 90%;
     border: 2px solid black;
     font-size: 1rem;
     background-color: #B0C0BC;
@@ -260,6 +267,40 @@ body .cartDetail .cleanCart{
 body .cartDetail .cleanCart button{
     padding: 10%;
     background-color: #C1EDCC;
+}
+
+body .errorContainer{
+    margin: 1%;
+    padding: 1%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border: 2px solid black;
+    font-size: 1rem;
+    background-color: #B0C0BC;
+}
+
+body .errorContainer .errorTitle{
+    font-size: 4rem;
+    text-decoration: underline solid;
+}
+
+body .errorContainer .errorDescription{
+    font-size: 2rem;
+}
+
+body .errorContainer button{
+    width: 30%;
+    height: fit-content;
+    font-size: 2rem;
+}
+
+body .errorContainer button a{
+    text-decoration: none;
+    color: #000000;
 }
 
 body footer {

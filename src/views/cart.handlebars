@@ -7,11 +7,16 @@
             <p>Producto: {{this.product.title}}</p>
             <p>Precio unitario: ${{this.product.price}}</p>
             <p>Cantidad: {{this.quantity}}</p>
-            <a href='/product/{{this.product._id}}'>Ver detalle de producto</a>
+            <form action="/cart/{{../cart._id}}/product/{{this.product._id}}?_method=DELETE" method="post"
+                enctype='application/x-www-form-urlencoded'>
+                <input type='hidden' name='_method' value='DELETE'>
+                <button type='submit'>Eliminar producto de carrito</button>
+            </form>
         </li>
         {{/each}}
     </ul>
-    <form class="addProduct" action='/cart/{{cart._id}}?_method=PUT' method="post" enctype='application/x-www-form-urlencoded'>
+    <form class="addProduct" action='/cart/{{cart._id}}?_method=PUT' method="post"
+        enctype='application/x-www-form-urlencoded'>
         <label for="productId">Producto:</label>
         <select id="productId" name="productId" required>
             <option value="">Selecciona un producto</option>
@@ -23,7 +28,8 @@
         <input type="number" id="quantity" name="quantity" min="1" required>
         <button type="submit">Agregar al carrito</button>
     </form>
-    <form class="cleanCart" action='/cart/{{cart._id}}?_method=DELETE' method='POST' enctype='application/x-www-form-urlencoded'>
+    <form class="cleanCart" action='/cart/{{cart._id}}?_method=DELETE' method='POST'
+        enctype='application/x-www-form-urlencoded'>
         <input type='hidden' name='_method' value='DELETE'>
         <button type='submit'>Vaciar carrito</button>
     </form>

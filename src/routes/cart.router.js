@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
 
         await newcart.save()
 
-        res.render('cart', { cart: newcart.toObject() })
+        res.redirect(`/cart/${newcart._id}`)
 
     } catch (error) {
         res.render('error', { error: 'Error al crear carrito' })
@@ -94,14 +94,11 @@ router.delete("/:cid", async (req, res) => {
         const { cid } = req.params
 
         const cart = await CartModel.findById(cid)
-        if (!cart) {
-            return res.render("error", { error: 'Carrito no encontrado' })
-        }
 
         cart.products = []
         await cart.save()
 
-        res.render("cart", { cart: cart.toObject() })
+        res.redirect(`/cart/${cid}`)
 
     } catch (error) {
         res.render('error', { error: 'Error al eliminar carrito' })
@@ -114,19 +111,15 @@ router.delete("/:cid/product/:pid", async (req, res) => {
 
         const cart = await CartModel.findById(cid)
 
-        if (!cart) {
-            return res.render("error", { error: 'Carrito no encontrado' })
-        }
-
-        const productIndex = CartModel.products.findIndex(p => p._id.toString() === pid)
-        if (productIndex === -1) {
+        const productIndex = cart.products.findIndex(p => p._id.toString() === pid)
+        if (!productIndex) {
             return res.render("error", { error: 'Producto no encontrado en el carrito' })
         }
 
-        CartModel.products.splice(productIndex, 1)
-        await cart.save()
+        cart.products.splice(productIndex, 1)
+        cart.save()
 
-        res.render("cart", { cart: cart.toObject() })
+        res.redirect(`/cart/${cid}`)
 
     } catch (error) {
         res.render('error', { error: 'Error al eliminar producto en carrito' })

@@ -15,7 +15,7 @@ function populateCartSelect(carts) {
     carts.forEach(cart => {
       const option = document.createElement('option')
       option.value = cart._id
-      option.text = cart._id
+      option.text = cart.title + ": " + cart._id
       cartId.appendChild(option)
     })
     cartId.addEventListener('change', () => {

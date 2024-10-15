@@ -3,12 +3,13 @@
     <p class='price'>Precio: ${{product.price}}</p>
     <p class='description'>{{product.description}}</p>
     <p class='id'>ID: {{product._id}}</p>
+    <p>Categoria: {{product.category}}</p>
 
     <form action='/product/{{product._id}}/addtocart' method="POST" enctype="application/x-www-form-urlencoded">
         <select id="cartId" name="cartId">
             <option>Selecciona un carrito</option>
             {{#each availableCarts}}
-            <option  value="{{this._id}}">{{this._id}}</option>
+            <option  value="{{this._id}}"></option>
             {{/each}}
         </select>
         <input type="hidden" name="quantity" value="1">
